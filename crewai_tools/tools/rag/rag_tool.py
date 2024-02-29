@@ -26,8 +26,17 @@ class RagTool(BaseTool):
         query: str,
     ) -> Any:
         from crewai_tools.adapters.embedchain_adapter import EmbedchainAdapter
-        self.adapter = EmbedchainAdapter(embedchain_app=self.app, summarize=self.summarize)
+        if self.adapter is None:
+            self.adapter = EmbedchainAdapter(embedchain_app=self.app, summarize=self.summarize)
         return f"Relevant Content:\n{self.adapter.query(query)}"
+    
+    # def _run(
+    #     self,
+    #     query: str,
+    # ) -> Any:
+    #     from crewai_tools.adapters.embedchain_adapter import EmbedchainAdapter
+    #     self.adapter = EmbedchainAdapter(embedchain_app=self.app, summarize=self.summarize)
+    #     return f"Relevant Content:\n{self.adapter.query(query)}"
 
     def from_embedchain(self, config_path: str):
         from embedchain import App
